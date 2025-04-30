@@ -18,7 +18,6 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests()
                 .requestMatchers("/create", "/modifica/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/pizze/**").hasAuthority("ADMIN")
-                .requestMatchers("**/offerte", "/offerte").hasAuthority("ADMIN")
                 .requestMatchers("/pizze", "/pizze/**").hasAnyAuthority("USER", "ADMIN")
                 .requestMatchers("/**").permitAll()
                 .and().formLogin()
