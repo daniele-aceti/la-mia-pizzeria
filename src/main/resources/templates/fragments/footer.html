@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <div th:replace="fragments/header :: head"></div>
+  </head>
+<body>
+    <div th:fragment="footer">
+        <footer class="mt-5" style="height: 80px;">
+    <div class="bg-dark h-100">
+      <p class="text-white text-center pt-3">&copy; 2025-Tutti i diritti riservati</p>
+    </div>
+  </footer>
+    </div>
+<div th:replace="fragments/header :: bootstrapScript"></div>
+</body>
+</html>
