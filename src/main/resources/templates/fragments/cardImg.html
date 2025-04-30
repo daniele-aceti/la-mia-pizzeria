@@ -34,7 +34,7 @@
         <div class="card-body text-center">
           <p class="card-text" th:text="|${pizza.prezzo} €|"></p>
           <p class="card-text" th:text="|QUANTINTA MAGAZZINO: ${pizza.quantitaPizza}|"></p>
-          <a class="btn btn-danger me-2" th:href="@{|/modifica/${pizza.id}|}">Modifica Pizza</a>
+          <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger me-2" th:href="@{|/modifica/${pizza.id}|}">Modifica Pizza</a>
         </div>
       </div>
     </div>
@@ -55,8 +55,8 @@
           <div class="card-body text-center">
             <p class="card-text" th:text="|${pizza.prezzo} €|"></p>
             <p class="card-text" th:text="|QUANTINTA MAGAZZINO: ${pizza.quantitaPizza}|"></p>
-            <a class="btn btn-danger me-2" th:href="@{|/modifica/${pizza.id}|}">Modifica Pizza</a>
-            <form action="#" th:action="@{|/delete/${pizza.id}|}" method="post" class="d-inline">
+            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger me-2" th:href="@{|/modifica/${pizza.id}|}">Modifica Pizza</a>
+            <form sec:authorize="hasAuthority('ADMIN')" action="#" th:action="@{|/delete/${pizza.id}|}" method="post" class="d-inline">
               <button type="submit" class="btn btn-danger"
                 onclick="return confirm('Vuoi eliminare questa pizza?')">Elimina Pizza</button>
             </form>
