@@ -5,12 +5,16 @@ import java.util.List;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
-import jakarta.validation.constraints.NotBlank;
+import jakarta.persistence.OneToOne;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
 public class Shop {
@@ -19,15 +23,22 @@ public class Shop {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank(message="Inserire un valore corretto")
-    @DateTimeFormat(pattern="yyy-MM-dd")
+    @NotNull(message = "Inserire un valore corretto")
+    @DateTimeFormat(pattern = "yyy-MM-dd")
     private LocalDate dataDiCreazione;
 
-    @OneToMany(mappedBy="shop")
+    @OneToMany(mappedBy = "shop")
     private List<RecordShop> recordShop;
 
-    
- 
+    @OneToOne(mappedBy = "shop")
+    private User user;
+
+    @ManyToMany(mappedBy = "shop")//è il nome della lista
+    @JsonBackReference
+    private List<Pizza> pizza;
+
+
+
     public Long getId() {
         return id;
     }
@@ -39,18 +50,33 @@ public class Shop {
     public List<RecordShop> getRecordShop() {
         return recordShop;
     }
- 
-     public void setRecordShop(List<RecordShop> recordShop) {
+
+    public void setRecordShop(List<RecordShop> recordShop) {
         this.recordShop = recordShop;
     }
 
-     public LocalDate getDataDiCreazione() {
-         return dataDiCreazione;
-     }
+    public LocalDate getDataDiCreazione() {
+        return dataDiCreazione;
+    }
 
-     public void setDataDiCreazione(LocalDate dataDiCreazione) {
-         this.dataDiCreazione = dataDiCreazione;
-     } 
+    public void setDataDiCreazione(LocalDate dataDiCreazione) {
+        this.dataDiCreazione = dataDiCreazione;
+    }
 
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<Pizza> getPizza() {
+        return pizza;
+    }
+
+    public void setPizza(List<Pizza> pizza) {
+        this.pizza = pizza;
+    }
 
 }

@@ -62,6 +62,22 @@ public class Pizza {
     @OneToMany(mappedBy="pizza")
     private List<RecordShop> recordShop;
 
+    @ManyToMany()
+    @JoinTable(
+        name = "pizza_shop",
+        joinColumns = @JoinColumn(name = "pizza_id"),
+        inverseJoinColumns = @JoinColumn(name = "shop_id")
+    )
+    private List<Shop> shop;//questo nome è quello del mapping
+
+    @ManyToMany()
+    @JoinTable(
+        name = "pizza_user",
+        joinColumns = @JoinColumn(name = "pizza_id"),
+        inverseJoinColumns = @JoinColumn(name = "user_id")
+    )
+    private List<User> user;//questo nome è quello del mapping
+
 
     public List<Ingredienti> getIngredienti() {
         return ingredienti;

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <div th:replace="fragments/header :: head"></div>
+    <link rel="stylesheet" href="/css/indexStyle.css" />
+    <title>Creazione Nuovo Utente</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+    <div class="container">
+      <form
+        id="user-form"
+        th:object="${user}"
+        th:action="@{/user/create}"
+        method="post"
+      >
+        <div class="row">
+          <div class="col-8">
+            <div class="row">
+              <div class="col-12">
+                <label class="form-label text-light">Nome</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="nome"
+                  th:field="*{nome}"
+                  th:errorClass="is-invalid"
+                />
+                <ul th:if="${#fields.hasErrors('nome')}">
+                  <li th:each="err : ${#fields.errors('nome')}" class="text-danger" th:text="${err}"></li>
+              </ul>
+              </div>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-light">Cognome</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="cognome"
+                  th:field="*{cognome}"
+                  th:errorClass="is-invalid"
+                />
+                <ul th:if="${#fields.hasErrors('cognome')}">
+                  <li th:each="err : ${#fields.errors('cognome')}" class="text-danger" th:text="${err}"></li>
+              </ul>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-light">Username</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="username"
+                  th:field="*{username}"
+                  th:errorClass="is-invalid"
+                />
+                <ul th:if="${#fields.hasErrors('username')}">
+                  <li th:each="err : ${#fields.errors('username')}" class="text-danger" th:text="${err}"></li>
+              </ul>
+              </div>
+              <div class="col-12">
+                <label class="form-label text-light">Password</label>
+                <input
+                  type="password"
+                  class="form-control"
+                  id="password"
+                  th:field="*{password}"
+                  th:errorClass="is-invalid"
+                />
+                <ul th:if="${#fields.hasErrors('password')}">
+                  <li th:each="err : ${#fields.errors('password')}" class="text-danger" th:text="${err}"></li>
+              </ul>
+              </div>
+              <div>
+                <button class="btn btn-primary mt-5" type="submit">
+                  Invia
+                </button>
+                <a class="btn btn-danger mt-5" th:href="@{/login}">Cancel</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <div th:replace="~{fragments/header :: bootstrapScript}"></div>
+  </body>
+</html>

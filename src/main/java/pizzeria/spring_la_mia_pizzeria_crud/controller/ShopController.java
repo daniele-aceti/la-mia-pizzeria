@@ -39,10 +39,10 @@ public class ShopController {
             Model model,
             RedirectAttributes redirectAttributes) {
 
-                //controllo quantità carrello
+        //controllo quantità carrello
         if (quantitaPizzaCarrello == null || quantitaPizzaCarrello <= 0) {
             redirectAttributes.addFlashAttribute("errorMessage",
-             "Hai inserito una quantità uguale o inferiore a zero");
+                    "Hai inserito una quantità uguale o inferiore a zero");
             return "redirect:/pizze";
         }
         List<RecordDtoView> carrello = recordShopRepository.findCarrelloView(idShop);
@@ -80,10 +80,10 @@ public class ShopController {
         model.addAttribute("listaCarrello", carrello);
         Double sum = 0.0;
         for (RecordDtoView pizza : carrello) {
-                if (pizza.getQuantitaPizzaCarrello() > pizza.getQuantitaPizza()) {
-                    pizza.setQuantitaPizzaCarrello(pizza.getQuantitaPizza());
-                }
-                sum += (pizza.getPrezzo() * pizza.getQuantitaPizzaCarrello());
+            if (pizza.getQuantitaPizzaCarrello() > pizza.getQuantitaPizza()) {
+                pizza.setQuantitaPizzaCarrello(pizza.getQuantitaPizza());
+            }
+            sum += (pizza.getPrezzo() * pizza.getQuantitaPizzaCarrello());
         }
         model.addAttribute("prezzoCarrello", sum);
         return "carrello/shop";
@@ -101,13 +101,12 @@ public class ShopController {
             RedirectAttributes redirectAttributes) {
 
         RecordShop record = recordShopRepository.findById(id).get();
-
+        Pizza pizza = record.getPizza(); // prendo la pizza associata al record
         if (record == null || record.getPizza() == null) {
             redirectAttributes.addFlashAttribute("errore", "Record o pizza non trovati!");
             return "redirect:/showShop/1";
         }
 
-        Pizza pizza = record.getPizza(); // prendo la pizza associata al record
         Integer quantitaMagazzino = pizza.getQuantitaPizza();
 
         if (nuovaQuantita > quantitaMagazzino) {
@@ -118,7 +117,6 @@ public class ShopController {
         redirectAttributes.addFlashAttribute("modifica", "Modifica eseguita la " + record.getPizza().getNome() + " ora ha quantità " + nuovaQuantita);
         record.setQuantitaPizzaCarrello(nuovaQuantita);
         recordShopRepository.save(record);
-
         return "redirect:/showShop/1";
     }
 }

@@ -82,6 +82,8 @@
             </form>
         
             <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-sm btn-danger me-3" th:href="@{/create}">Aggiungi Pizza</a>
+            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-sm btn-danger me-3" th:href="@{/user/create}">Aggiungi User</a>
+
         
             <a href="/logout" class="btn btn-light">
               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-right" viewBox="0 0 16 16">

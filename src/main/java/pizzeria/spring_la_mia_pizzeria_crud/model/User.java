@@ -2,13 +2,17 @@ package pizzeria.spring_la_mia_pizzeria_crud.model;
 
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 
@@ -39,12 +43,37 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
+    @OneToOne
+    @JoinColumn(name = "shop_id", referencedColumnName = "id")
+    private Shop shop;
+
+    @ManyToMany(mappedBy = "user")//è il nome della lista
+    @JsonBackReference
+    private List<Pizza> pizza;
+
     public List<Role> getRoles() {
         return roles;
     }
 
     public void setRoles(List<Role> roles) {
         this.roles = roles;
+    }
+    
+
+    public Shop getShop() {
+        return shop;
+    }
+
+    public void setShop(Shop shop) {
+        this.shop = shop;
+    }
+
+    public List<Pizza> getPizza() {
+        return pizza;
+    }
+
+    public void setPizza(List<Pizza> pizza) {
+        this.pizza = pizza;
     }
 
     public Long getId() {
@@ -85,6 +114,14 @@ public class User {
 
     public void setUsername(String username) {
         this.username = username;
+    }
+
+    public Shop getUser() {
+        return shop;
+    }
+
+    public void setUser(Shop shop) {
+        this.shop = shop;
     }
 
 }
