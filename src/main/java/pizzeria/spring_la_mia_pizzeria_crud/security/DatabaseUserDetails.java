@@ -19,8 +19,10 @@ public class DatabaseUserDetails implements UserDetails {
     private final String username;
     private final String password;
     private final List<GrantedAuthority> authorities;
+    private final Long shopId;
 
     public DatabaseUserDetails(User user) {
+        this.shopId = user.getShop().getId();
         this.id = user.getId();
         this.nome = user.getNome();
         this.username = user.getUsername();
@@ -31,6 +33,24 @@ public class DatabaseUserDetails implements UserDetails {
             this.authorities.add(new SimpleGrantedAuthority(ruolo.getName()));
         }
 
+    }
+    
+
+    public Long getId() {
+        return id;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public String getCognome() {
+        return cognome;
+    }
+
+    
+    public Long getShopId() {
+        return shopId;
     }
 
     @Override
@@ -47,5 +67,7 @@ public class DatabaseUserDetails implements UserDetails {
     public String getUsername() {
         return this.username;
     }
+
+
 
 }

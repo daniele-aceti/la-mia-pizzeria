@@ -62,7 +62,7 @@
             </form>
             <form class="mt-1" th:action="@{|/addShop/${pizza.id}|}" method="post">
               <div class="input-group mb-1 justify-content-center">
-                <input name="idShop" value="1" class="form-check-input mt-0 " type="hidden" aria-label="Checkbox for following text input">
+                <input name="shopId" th:value="${#authentication.principal.shopId}" class="form-check-input mt-0 " type="hidden" aria-label="Checkbox for following text input">
                 <input  name="quantitaPizzaCarrello" th:value="${quantitaPizzaCarrello}"
                   placeholder="Inserisci la quantità" type="number" class="rounded-pill form-control form-control-sm text-center"
                   aria-label="Text input with checkbox" style="max-width: 200px;">

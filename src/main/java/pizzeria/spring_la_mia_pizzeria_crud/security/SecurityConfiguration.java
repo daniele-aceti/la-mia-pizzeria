@@ -12,9 +12,13 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class SecurityConfiguration {
 
-        @Bean
+    @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+        http
+                .formLogin(form -> form
+                .loginPage("/login")
+                .permitAll()
+                );
         http.authorizeHttpRequests()
                 .requestMatchers("/create", "/modifica/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/pizze/**").hasAuthority("ADMIN")

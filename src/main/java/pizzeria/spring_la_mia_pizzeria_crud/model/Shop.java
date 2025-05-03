@@ -11,6 +11,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
@@ -30,14 +31,14 @@ public class Shop {
     @OneToMany(mappedBy = "shop")
     private List<RecordShop> recordShop;
 
-    @OneToOne(mappedBy = "shop")
+    @OneToOne
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
     private User user;
 
     @ManyToMany(mappedBy = "shop")//è il nome della lista
     @JsonBackReference
     private List<Pizza> pizza;
-
-
+    
 
     public Long getId() {
         return id;
@@ -63,20 +64,20 @@ public class Shop {
         this.dataDiCreazione = dataDiCreazione;
     }
 
-    public User getUser() {
-        return user;
-    }
-
-    public void setUser(User user) {
-        this.user = user;
-    }
-
     public List<Pizza> getPizza() {
         return pizza;
     }
 
     public void setPizza(List<Pizza> pizza) {
         this.pizza = pizza;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 
 }

@@ -18,6 +18,7 @@ import pizzeria.spring_la_mia_pizzeria_crud.model.Shop;
 import pizzeria.spring_la_mia_pizzeria_crud.repository.CarrelloRepository;
 import pizzeria.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import pizzeria.spring_la_mia_pizzeria_crud.repository.ShopRecordRepository;
+import pizzeria.spring_la_mia_pizzeria_crud.repository.UserRepository;
 
 @Controller
 public class ShopController {
@@ -31,11 +32,15 @@ public class ShopController {
     @Autowired
     private ShopRecordRepository recordShopRepository;
 
+    @Autowired
+    private UserRepository userRepository;
+
+
     @PostMapping("/addShop/{idPizza}")
     public String addShop(
             @PathVariable Long idPizza,
-            Long idShop,
-            Integer quantitaPizzaCarrello,
+           @RequestParam Long shopId,
+           @RequestParam Integer quantitaPizzaCarrello,
             Model model,
             RedirectAttributes redirectAttributes) {
 
@@ -45,7 +50,7 @@ public class ShopController {
                     "Hai inserito una quantità uguale o inferiore a zero");
             return "redirect:/pizze";
         }
-        List<RecordDtoView> carrello = recordShopRepository.findCarrelloView(idShop);
+        List<RecordDtoView> carrello = recordShopRepository.findCarrelloView(shopId);
         Pizza pizza = pizzaRepository.findById(idPizza).get();
         //pizza NO null
         if (pizza == null) {
@@ -60,7 +65,7 @@ public class ShopController {
             }
         }
         redirectAttributes.addFlashAttribute("successMessage", "La pizza è stata aggiunta nel carrello");
-        Shop shop = shopRepository.findById(idShop).get();
+        Shop shop = shopRepository.findById(shopId).get();
         //shop NO null
         if (shop == null) {
             redirectAttributes.addFlashAttribute("errorMessage", "Pizza non trovata");
@@ -74,9 +79,9 @@ public class ShopController {
         return "redirect:/pizze";
     }
 
-    @GetMapping("/showShop/{id}")
-    public String showShop(@PathVariable Long id, Model model) {
-        List<RecordDtoView> carrello = recordShopRepository.findCarrelloView(id);
+    @GetMapping("/showShop/{shopId}")
+    public String showShop(@PathVariable Long shopId, Model model) {
+        List<RecordDtoView> carrello = recordShopRepository.findCarrelloView(shopId);
         model.addAttribute("listaCarrello", carrello);
         Double sum = 0.0;
         for (RecordDtoView pizza : carrello) {
@@ -92,31 +97,30 @@ public class ShopController {
     @PostMapping("/deleteShop/{id}")
     public String delete(@PathVariable Long id) {
         recordShopRepository.deleteById(id);
-        return "redirect:/showShop/1";
+        return "redirect:/pizze";
     }
 
     @PostMapping("/modificaShop/{id}")
     public String modificaShop(@PathVariable Long id,
             @RequestParam("quantitaPizzaCarrello") int nuovaQuantita,
             RedirectAttributes redirectAttributes) {
-
         RecordShop record = recordShopRepository.findById(id).get();
         Pizza pizza = record.getPizza(); // prendo la pizza associata al record
         if (record == null || record.getPizza() == null) {
             redirectAttributes.addFlashAttribute("errore", "Record o pizza non trovati!");
-            return "redirect:/showShop/1";
+            return "redirect:/pizze";
         }
 
         Integer quantitaMagazzino = pizza.getQuantitaPizza();
 
         if (nuovaQuantita > quantitaMagazzino) {
             redirectAttributes.addFlashAttribute("errore", "Quantità: " + nuovaQuantita + " il valore inserito supera la disponibilità in magazzino!");
-            return "redirect:/showShop/1";
+            return "redirect:/pizze";
         }
 
         redirectAttributes.addFlashAttribute("modifica", "Modifica eseguita la " + record.getPizza().getNome() + " ora ha quantità " + nuovaQuantita);
         record.setQuantitaPizzaCarrello(nuovaQuantita);
         recordShopRepository.save(record);
-        return "redirect:/showShop/1";
+        return "redirect:/pizze";
     }
 }

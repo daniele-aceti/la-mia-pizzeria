@@ -10,7 +10,6 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
@@ -43,13 +42,15 @@ public class User {
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 
-    @OneToOne
-    @JoinColumn(name = "shop_id", referencedColumnName = "id")
-    private Shop shop;
 
     @ManyToMany(mappedBy = "user")//è il nome della lista
     @JsonBackReference
     private List<Pizza> pizza;
+
+    @OneToOne(mappedBy = "user")
+    private Shop shop;
+
+
 
     public List<Role> getRoles() {
         return roles;
@@ -59,14 +60,6 @@ public class User {
         this.roles = roles;
     }
     
-
-    public Shop getShop() {
-        return shop;
-    }
-
-    public void setShop(Shop shop) {
-        this.shop = shop;
-    }
 
     public List<Pizza> getPizza() {
         return pizza;
@@ -116,12 +109,13 @@ public class User {
         this.username = username;
     }
 
-    public Shop getUser() {
+    public Shop getShop() {
         return shop;
     }
 
-    public void setUser(Shop shop) {
+    public void setShop(Shop shop) {
         this.shop = shop;
     }
+
 
 }
