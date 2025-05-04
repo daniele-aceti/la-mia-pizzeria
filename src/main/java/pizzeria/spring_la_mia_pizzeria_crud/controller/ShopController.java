@@ -35,12 +35,11 @@ public class ShopController {
     @Autowired
     private UserRepository userRepository;
 
-
     @PostMapping("/addShop/{idPizza}")
     public String addShop(
             @PathVariable Long idPizza,
-           @RequestParam Long shopId,
-           @RequestParam Integer quantitaPizzaCarrello,
+            @RequestParam Long shopId,
+            @RequestParam Integer quantitaPizzaCarrello,
             Model model,
             RedirectAttributes redirectAttributes) {
 

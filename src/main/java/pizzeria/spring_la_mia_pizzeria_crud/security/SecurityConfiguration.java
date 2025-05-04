@@ -20,6 +20,7 @@ public class SecurityConfiguration {
                 .permitAll()
                 );
         http.authorizeHttpRequests()
+                .requestMatchers("/*/create", "/offerte/*/edit", "/offerte/*/delete").hasAuthority("ADMIN")
                 .requestMatchers("/create", "/modifica/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/pizze/**").hasAuthority("ADMIN")
                 .requestMatchers("/pizze", "/pizze/**").hasAnyAuthority("USER", "ADMIN")

@@ -28,7 +28,7 @@
         <div class="col-12">
           <h3 class="text-light">Offerte Speciali</h3>
           <div class="mb-2">
-            <a class="btn btn-success" th:href="@{|/${pizza.id}/offerte|}">
+            <a sec:authorize="hasAuthority('ADMIN')" class="btn btn-success" th:href="@{|/${pizza.id}/offerte|}">
               Nuova Offerta
             </a>
           </div>
@@ -51,13 +51,13 @@
                 <td  th:text="${offerte.dataInizio}"></td>
                 <td class="ps-3" th:text="${offerte.dataFine}"></td>
                 <td class="ps-3" th:text="${offerte.titolo}"></td>
-                <td class="ps-3"><a class="btn btn-dark" th:href="@{|/offerte/${offerte.id}/edit|}">
+                <td sec:authorize="hasAuthority('ADMIN')" class="ps-3"><a class="btn btn-dark" th:href="@{|/offerte/${offerte.id}/edit|}">
                     Modifica
                   </a> </td>
                 <form action="#" th:action="@{|/offerte/${offerte.id}/delete|}" method="post">
                   <td class="ps-3">
                   
-                      <button class="btn btn-danger" type="submit" onclick="return confirm('Vuoi eliminare questa offerta?')">
+                      <button sec:authorize="hasAuthority('ADMIN')" class="btn btn-danger" type="submit" onclick="return confirm('Vuoi eliminare questa offerta?')">
                      Elimina</button>
                   </td>
                 </form>

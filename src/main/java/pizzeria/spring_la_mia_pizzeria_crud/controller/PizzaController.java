@@ -22,7 +22,6 @@ import pizzeria.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import pizzeria.spring_la_mia_pizzeria_crud.repository.QuantitaPizzeRepository;
 import pizzeria.spring_la_mia_pizzeria_crud.service.PizzaService;
 
-
 @Controller
 @RequestMapping
 
@@ -42,7 +41,6 @@ public class PizzaController {
     @Autowired
     private IngredientiRepository ingredientiRepository;
 
-
     PizzaController(OfferteRepository offerteRepository, QuantitaPizzeRepository quantitaPizzeRepository) {
         this.offerteRepository = offerteRepository;
         this.quantitaPizzeRepository = quantitaPizzeRepository;
@@ -51,6 +49,11 @@ public class PizzaController {
     @GetMapping
     public String primaPagina(Model model) {
         return "pizze/primaPagina";
+    }
+
+    @GetMapping("/login")
+    public String loginPage() {
+        return "pizze/login";
     }
 
     @GetMapping("/loading")
@@ -140,5 +143,4 @@ public class PizzaController {
         return "offerte/edit";
     }
 
-   
 }

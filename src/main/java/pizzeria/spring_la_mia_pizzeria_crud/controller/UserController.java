@@ -43,15 +43,9 @@ public class UserController {
     @PostMapping("/create")
     public String creaUser(@Valid @ModelAttribute("user") User formUser,
             BindingResult bindingResult, Model model) {
-        /* formUser.setPassword("{noop}" + formUser.getPassword()); */
+        formUser.setPassword("{noop}" + formUser.getPassword());
         userRepository.save(formUser); //salva l'user
         Shop newShop = new Shop();
-/*         if(roleRepository.findAll().isEmpty()){
-            Role ruoloAdmin = new Role();
-            ruoloAdmin.setName("ADMIN");
-            Role ruoloUser = new Role();
-            ruoloUser.setName("USER");
-        } */
         Role ruolo = roleRepository.findById(2L).get();
         formUser.setRoles(List.of(ruolo));
         newShop.setDataDiCreazione(LocalDate.now());
