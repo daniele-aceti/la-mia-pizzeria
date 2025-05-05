@@ -24,6 +24,7 @@ public class SecurityConfiguration {
                 .requestMatchers("/create", "/modifica/**").hasAuthority("ADMIN")
                 .requestMatchers(HttpMethod.POST, "/pizze/**").hasAuthority("ADMIN")
                 .requestMatchers("/pizze", "/pizze/**").hasAnyAuthority("USER", "ADMIN")
+                .requestMatchers("/user/create").permitAll()
                 .requestMatchers("/**").permitAll()
                 .and().formLogin()
                 .and().logout()

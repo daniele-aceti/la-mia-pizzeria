@@ -20,12 +20,15 @@ import pizzeria.spring_la_mia_pizzeria_crud.repository.IngredientiRepository;
 import pizzeria.spring_la_mia_pizzeria_crud.repository.OfferteRepository;
 import pizzeria.spring_la_mia_pizzeria_crud.repository.PizzaRepository;
 import pizzeria.spring_la_mia_pizzeria_crud.repository.QuantitaPizzeRepository;
+import pizzeria.spring_la_mia_pizzeria_crud.repository.UserRepository;
 import pizzeria.spring_la_mia_pizzeria_crud.service.PizzaService;
 
 @Controller
 @RequestMapping
 
 public class PizzaController {
+
+    private final UserRepository userRepository;
 
     private final QuantitaPizzeRepository quantitaPizzeRepository;
 
@@ -41,9 +44,10 @@ public class PizzaController {
     @Autowired
     private IngredientiRepository ingredientiRepository;
 
-    PizzaController(OfferteRepository offerteRepository, QuantitaPizzeRepository quantitaPizzeRepository) {
+    PizzaController(OfferteRepository offerteRepository, QuantitaPizzeRepository quantitaPizzeRepository, UserRepository userRepository) {
         this.offerteRepository = offerteRepository;
         this.quantitaPizzeRepository = quantitaPizzeRepository;
+        this.userRepository = userRepository;
     }
 
     @GetMapping
@@ -52,7 +56,11 @@ public class PizzaController {
     }
 
     @GetMapping("/login")
-    public String loginPage() {
+    public String loginPage(Model model) {
+        if (userRepository.count() == 0) {
+            model.addAttribute("errorUser", "Il sito è in manutenzione riprova più tardi!");
+            return "/pizze/login";
+        }
         return "pizze/login";
     }
 

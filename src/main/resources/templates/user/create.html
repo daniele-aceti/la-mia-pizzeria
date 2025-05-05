@@ -17,6 +17,11 @@
         </div>
     </header>
 
+     
+  <div th:if="${errorUser}" class="alert alert-danger text-center">
+    <p th:text="${errorUser}" class="fw-bold"></p>
+  </div>
+
     <!-- Form Registrazione -->
     <div class="container d-flex justify-content-center">
         <form id="user-form"

@@ -43,6 +43,11 @@ public class UserController {
     @PostMapping("/create")
     public String creaUser(@Valid @ModelAttribute("user") User formUser,
             BindingResult bindingResult, Model model) {
+
+        if (userRepository.count() == 0) {
+            model.addAttribute("errorUser", "Il sito è in manutenzione riprova più tardi!");
+            return "/user/create";
+        }
         formUser.setPassword("{noop}" + formUser.getPassword());
         userRepository.save(formUser); //salva l'user
         Shop newShop = new Shop();
