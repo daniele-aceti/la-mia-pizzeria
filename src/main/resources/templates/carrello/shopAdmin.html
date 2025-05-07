@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <div th:replace="fragments/header :: head"></div>
+    <link rel="stylesheet" href="/css/indexStyle.css" />
+    <title>Carrelli Admin</title>
+  </head>
+  <body>
+    <div th:replace="~{fragments/navbar :: navbar}"></div>
+
+    <h1 class="text-danger text-center">Lista Carrelli Admin</h1>
+
+    <div class="container">
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">User</th>
+            <th scope="col">Data Creazione</th>
+            <th scope="col">Pizze</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr th:each="carrello : ${carrelliAdmin}">
+            <td th:text="${carrello.id}"></td>
+            <td th:text="${carrello.user.username}"></td>
+            <td th:text="${carrello.dataDiCreazione}"></td>
+            <td>
+              <ul>
+                <!-- Itera su RecordShop associato al carrello -->
+                <li th:each="record : ${carrello.recordShop}">
+                  <img th:src="@{${record.pizza.foto}}" alt="Pizza Image" style="width: 50px;" />
+                  <div th:text="${record.pizza.descrizione}"></div> <!-- Descrizione pizza -->
+                  <h6>Quantità</h6>
+                  <div th:text="${record.quantitaPizzaCarrello}"></div>
+                  <div th:if="${record.pizza.quantitaPizza < record.quantitaPizzaCarrello }">La quantità non è ordinabile</div> <!-- Quantità nel carrello -->
+                  <h6>Prezzo</h6>
+                  <div th:text="${record.pizza.prezzo}"></div> <!-- Prezzo pizza -->
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div th:replace="~{fragments/footer :: footer}"></div>
+    <div th:replace="~{fragments/header :: bootstrapScript}"></div>
+  </body>
+</html>

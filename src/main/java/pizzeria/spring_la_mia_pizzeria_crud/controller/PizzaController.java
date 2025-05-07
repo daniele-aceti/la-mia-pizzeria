@@ -59,7 +59,7 @@ public class PizzaController {
     public String loginPage(Model model) {
         if (userRepository.count() == 0) {
             model.addAttribute("errorUser", "Il sito è in manutenzione riprova più tardi!");
-            return "/pizze/login";
+            return "pizze/login";
         }
         return "pizze/login";
     }

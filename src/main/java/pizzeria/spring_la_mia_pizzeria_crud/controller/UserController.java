@@ -36,8 +36,8 @@ public class UserController {
     @GetMapping("/create")
     public String formCreaUser(Model model) {
         model.addAttribute("user", new User());
-        model.addAttribute("permessi", roleRepository.findByName("USER"));
-        return "user/create";
+        //model.addAttribute("permessi", roleRepository.findByName("USER"));
+        return "/user/create";
     }
 
     @PostMapping("/create")
@@ -46,7 +46,7 @@ public class UserController {
 
         if (userRepository.count() == 0) {
             model.addAttribute("errorUser", "Il sito è in manutenzione riprova più tardi!");
-            return "/user/create";
+            return "user/create";
         }
         formUser.setPassword("{noop}" + formUser.getPassword());
         userRepository.save(formUser); //salva l'user

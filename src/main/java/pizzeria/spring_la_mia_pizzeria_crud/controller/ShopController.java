@@ -3,6 +3,8 @@ package pizzeria.spring_la_mia_pizzeria_crud.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -79,7 +81,19 @@ public class ShopController {
     }
 
     @GetMapping("/showShop/{shopId}")
-    public String showShop(@PathVariable Long shopId, Model model) {
+    public String showShop(@PathVariable Long shopId, Model model, Authentication authentication) {
+        boolean isAdmin = false;
+        for (GrantedAuthority authority : authentication.getAuthorities()) {
+            if (authority.getAuthority().equals("ADMIN")) {
+                isAdmin = true;
+                break;
+            }
+        }
+
+        if (isAdmin) {
+            model.addAttribute("carrelliAdmin", shopRepository.findAll());
+            return "carrello/shopAdmin";
+        }
         List<RecordDtoView> carrello = recordShopRepository.findCarrelloView(shopId);
         model.addAttribute("listaCarrello", carrello);
         Double sum = 0.0;
