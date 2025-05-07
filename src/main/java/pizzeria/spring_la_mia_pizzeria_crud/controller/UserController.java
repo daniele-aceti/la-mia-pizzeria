@@ -36,14 +36,15 @@ public class UserController {
     @GetMapping("/create")
     public String formCreaUser(Model model) {
         model.addAttribute("user", new User());
-        //model.addAttribute("permessi", roleRepository.findByName("USER"));
         return "/user/create";
     }
 
     @PostMapping("/create")
     public String creaUser(@Valid @ModelAttribute("user") User formUser,
             BindingResult bindingResult, Model model) {
-
+        if (bindingResult.hasErrors()) {
+            return "user/create";
+        }
         if (userRepository.count() == 0) {
             model.addAttribute("errorUser", "Il sito è in manutenzione riprova più tardi!");
             return "user/create";

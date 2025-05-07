@@ -15,6 +15,16 @@
       </div>
     </header>
 
+    
+    <div th:if="${errorMessageLogin}" class="alert alert-danger text-center">
+      <p th:text="${errorMessageLogin}" class="fw-bold"></p>
+    </div>
+
+     
+    <div th:if="${logoutMessage}" class="alert alert-success text-center">
+      <p th:text="${logoutMessage}" class="fw-bold"></p>
+    </div>
+
     <div th:if="${errorUser}" class="alert alert-danger text-center">
       <p th:text="${errorUser}" class="fw-bold"></p>
     </div>

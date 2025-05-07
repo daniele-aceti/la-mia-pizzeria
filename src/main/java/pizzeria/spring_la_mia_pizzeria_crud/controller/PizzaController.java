@@ -56,7 +56,16 @@ public class PizzaController {
     }
 
     @GetMapping("/login")
-    public String loginPage(Model model) {
+    public String loginPage(@RequestParam(name = "error", required = false) String error,
+            @RequestParam(name = "logout", required = false) String logout, Model model) {
+                if(logout != null){
+                    model.addAttribute("logoutMessage", "Logout riuscito!");
+                    return "pizze/login";
+                }
+        if (error != null) {
+            model.addAttribute("errorMessageLogin", "Username o password errati!");
+            return "pizze/login";
+        }
         if (userRepository.count() == 0) {
             model.addAttribute("errorUser", "Il sito è in manutenzione riprova più tardi!");
             return "pizze/login";
