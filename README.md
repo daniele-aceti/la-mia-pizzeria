@@ -32,3 +32,7 @@
 - **Database:** MySQL
 - **ORM:** JPA (Hibernate)
 - **Build Tool:** Maven
+
+- 📌 Note
+Questo progetto è stato sviluppato a scopo didattico nell’ambito del corso di backend Java con Spring.
+L'obiettivo è comprendere i concetti fondamentali della sicurezza nelle applicazioni web.
