@@ -1,5 +1,7 @@
 # 🍕 La Mia Pizzeria
 
+📅 Ultimo aggiornamento 07/05/2025
+
 - Java 
 - Spring Boot
 - Spring MVC
